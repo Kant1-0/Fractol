@@ -6,12 +6,12 @@
 /*   By: qfremeau <qfremeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 13:35:37 by qfremeau          #+#    #+#             */
-/*   Updated: 2016/11/07 14:25:52 by qfremeau         ###   ########.fr       */
+/*   Updated: 2016/11/08 17:49:31 by qfremeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
+/*
 static void	zoom_map2(t_mlx *fdf, int keycode, t_param param)
 {
 	(void)fdf;
@@ -54,3 +54,4 @@ void		zoom_map(t_mlx *fdf, int keycode)
 	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
 	expose_hook(fdf);
 }
+*/

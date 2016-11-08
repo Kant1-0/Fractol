@@ -6,7 +6,7 @@
 /*   By: qfremeau <qfremeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 11:01:47 by qfremeau          #+#    #+#             */
-/*   Updated: 2016/11/07 16:23:33 by qfremeau         ###   ########.fr       */
+/*   Updated: 2016/11/07 18:24:02 by qfremeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,12 @@ static void	mlx_free(t_mlx *fdf)
 void		mlx_exit(int ret, t_mlx *fdf, char *error)
 {
 	if (ret == HELP)
+	{
+		if (error[0] != 0)
+			ft_dprintf(2, "Fractol error - %s\n\n", error);
 		print_help();
-	else if (ret < 1)
+	}
+	else if (ret == -1)
 		ft_dprintf(2, "Fractol error - %s\n", error);
 	else if (ret == 1)
 	{

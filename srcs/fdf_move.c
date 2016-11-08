@@ -6,11 +6,12 @@
 /*   By: qfremeau <qfremeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 18:09:03 by qfremeau          #+#    #+#             */
-/*   Updated: 2016/11/07 14:25:15 by qfremeau         ###   ########.fr       */
+/*   Updated: 2016/11/08 17:49:20 by qfremeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
 
 /*static void	init_param(t_param param, t_mov *mov)
 {
@@ -33,7 +34,7 @@
 	mov->mov_x += param.x;
 	mov->mov_y += param.y;
 }*/
-
+/*
 static void	move_map2(t_mlx *fdf, int keycode, t_param param)
 {
 	(void)fdf;
@@ -95,7 +96,7 @@ void		reset_map(t_mlx *fdf, int keycode)
 	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
 	expose_hook(fdf);
 }
-
+*/
 /*void		move_vertex(t_vert **start, t_param param, t_mlx *fdf)
 {
 	t_vert			*curs;

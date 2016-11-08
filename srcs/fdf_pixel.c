@@ -6,7 +6,7 @@
 /*   By: qfremeau <qfremeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:57:49 by qfremeau          #+#    #+#             */
-/*   Updated: 2016/11/01 16:59:27 by qfremeau         ###   ########.fr       */
+/*   Updated: 2016/11/08 17:56:41 by qfremeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ t_color	new_color(unsigned char const b, unsigned char const g,
 	return (new);
 }
 
-void	put_pixel_to_image(t_img const img, t_vert const vertex, t_mlx *fdf)
+void	put_pixel_to_image(t_img const img, t_vert const vertex)
 {
-	if (vertex.pos.x < fdf->window_x && vertex.pos.y < fdf->window_y &&
+	if (vertex.pos.x < img.width && vertex.pos.y < img.height &&
 		vertex.pos.x > 0 && vertex.pos.y > 0)
 		ft_memcpy(img.data + vertex.pos.y * img.sizeline + vertex.pos.x *
 			img.bpp / 8, &vertex.color, img.bpp / 8);
