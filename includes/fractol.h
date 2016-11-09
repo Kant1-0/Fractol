@@ -6,7 +6,7 @@
 /*   By: qfremeau <qfremeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 17:31:05 by qfremeau          #+#    #+#             */
-/*   Updated: 2016/11/08 19:21:43 by qfremeau         ###   ########.fr       */
+/*   Updated: 2016/11/09 20:54:28 by qfremeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,24 @@
 # include "get_next_line.h"
 
 # define API_NAME		"Fractol"
-# define WINDOW_X		1200
-# define WINDOW_Y		500
-# define WINDOW_EQ		600
-# define WINDOW_TL		700
-# define TILE_HALF		1
-# define EXPONENT_Z		4
 
 # define KEY_ESC		0x0035
 # define KEY_I			0x0022
+# define KEY_G			0x0005
 # define KEY_P			0x0023
 # define KEY_LEFT		0x007b
 # define KEY_RIGHT		0x007c
 # define KEY_DOWN		0x007d
 # define KEY_UP			0x007e
+# define KEY_W			0x000d
+# define KEY_A			0x0000
+# define KEY_S			0x0001
+# define KEY_D			0x0002
+# define KEY_Q			0x000c
+# define KEY_E			0x000e
+# define KEY_1			0x0012
+# define KEY_2			0x0013
+# define KEY_3			0x0014
 # define KEY_PLUS		0x0045
 # define KEY_MINUS		0x004e
 # define KEY_PG_UP		0x0074
@@ -50,6 +54,22 @@
 # define FRACT_OPT		"gIlh"
 # define FRACT_LST		"123"
 # define HELP			-2
+# define ERROR			-1
+# define EXIT			1
+
+# define BLUE			0x0000FF
+# define CYAN			0x00FFFF
+# define RED			0xFF0000
+# define GREEN			0x00FF00
+# define WHITE			0xFFFFFF
+# define BLACK			0x000000
+# define YELLOW			0xFFFF00
+
+typedef struct	s_coord
+{
+	int				pixel[2];
+	struct s_coord	*next;
+}				t_coord;
 
 typedef struct	s_color
 {
@@ -72,20 +92,12 @@ typedef struct	s_vert
 	struct s_vert	*next;
 }				t_vert;
 
-typedef struct	s_mov
-{
-	float		tile;
-	float		exp;
-	int			mov_x;
-	int			mov_y;
-}				t_mov;
-
 typedef struct	s_param
 {
 	int			zoom;
-	int			ratio;
-	int			x;
-	int			y;
+	int			iter;
+	float		x;
+	float		y;
 	int			reset;
 }				t_param;
 
@@ -102,8 +114,9 @@ typedef struct	s_fract
 
 typedef struct	s_img
 {
+	int				id;
 	t_fract			fract;
-	t_mov			mov;
+	t_param			param;
 	void			*img_ptr;
 	char			*data;
 	int				bpp;
@@ -125,6 +138,7 @@ typedef struct	s_mlx
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_img		*img;
+	t_img		*view;
 	int			window_x;
 	int			window_y;
 	int			elem;
@@ -134,6 +148,7 @@ typedef struct	s_mlx
 }				t_mlx;
 
 t_img			*lst_img_new(t_img **img, int width, int height, t_mlx *fdf);
+t_coord			*lst_coord_new(t_coord **coord, int x, int y);
 
 t_color			create_color_rgb(int rgb);
 
@@ -144,21 +159,24 @@ t_color			linear_interpolation(t_color const src, t_color const end,
 
 void			draw_fractol(t_img *img);
 
-void			move_map(t_mlx *fdf, int keycode);
-void			zoom_map(t_mlx *fdf, int keycode);
+void			move_map(t_mlx *fdf, int keycode, t_img *view);
+void			zoom_map(t_mlx *fdf, int keycode, t_img *view);
+void			select_map(t_mlx *fdf, int keycode, t_img **view);
 void			reset_map(t_mlx *fdf, int keycode);
+
 void			clear_image(t_img *img);
 void			draw_image(t_mlx *fdf);
 int				key_hook(int keycode, void *param);
 int				expose_hook(void *param);
 
+void			put_info_to_window(t_mlx *fdf, t_img *view);
 void			put_pixel_to_image(t_img const img, t_vert const vertex);
 t_color			new_color(unsigned char const b, unsigned char const g,
 	unsigned char const r, unsigned char const a);
 void			draw_line(t_img const img, t_vert const start,
 	t_vert const end);
 void			draw_point(t_img *img, t_vert point);
-//void			move_vertex(t_vert **start, t_param param, t_mlx *fdf);
+void			move_fract(t_img *view);
 
 void			mlx_exit(int ret, t_mlx *fdf, char *error);
 

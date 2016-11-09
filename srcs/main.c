@@ -6,7 +6,7 @@
 /*   By: qfremeau <qfremeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 21:40:50 by qfremeau          #+#    #+#             */
-/*   Updated: 2016/11/08 19:26:10 by qfremeau         ###   ########.fr       */
+/*   Updated: 2016/11/09 19:56:59 by qfremeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,18 @@ static void	compute_window(t_mlx *fdf)
 	if (fdf->elem == 3)
 	{
 		fdf->window_x = 2500;
-		fdf->window_y = 700;
+		fdf->window_y = 800;
 	}
 	else if (fdf->elem == 2)
 	{
 		fdf->window_x = 2100;
-		fdf->window_y = 800;
+		fdf->window_y = 900;
 	}
 	else
 	{
 		fdf->window_x = 1300;
-		fdf->window_y = 1000;
+		fdf->window_y = 1100;
 	}
-}
-
-static void	init_mov_param(t_mov *mov)
-{
-	mov->tile = TILE_HALF;
-	mov->exp = EXPONENT_Z;
-	mov->mov_x = 0;
-	mov->mov_y = 0;
 }
 
 static void	init_fract_param(t_fract *fract, t_img img, t_mlx *fdf)
@@ -46,25 +38,38 @@ static void	init_fract_param(t_fract *fract, t_img img, t_mlx *fdf)
 	if (fdf->elem == 3)
 	{
 		if (i == 1)
-			fract->opt = &fdf->opt3;
+			fract->opt = &fdf->opt1;
 		if (i == 2)
 			fract->opt = &fdf->opt2;
 		if (i == 3)
-			fract->opt = &fdf->opt1;
+			fract->opt = &fdf->opt3;
 	}
 	else if (fdf->elem == 2)
 	{
 		if (i == 1)
-			fract->opt = &fdf->opt3;
-		if (i == 2)
 			fract->opt = &fdf->opt2;
+		if (i == 2)
+			fract->opt = &fdf->opt3;
 	}
 	else if (fdf->elem == 1)
 		fract->opt = &fdf->opt3;
-	fract->x1 = -1.8;
-	fract->y1 = -1;
-	fract->zoom = img.height / 2;
+	if (*(fract->opt) & (1u << 4))
+	{
+		fract->x1 = -1.8;
+		fract->y1 = -1.0;
+	}
+	else if (*(fract->opt) & (1u << 5))
+	{
+		fract->x1 = -1.3;
+		fract->y1 = -1.0;
+	}
+	if (*(fract->opt) & (1u << 6))
+	{
+		fract->x1 = -1.3;
+		fract->y1 = -1.0;
+	}
 	fract->iter_max = 50;
+	fract->zoom = img.height / 2;
 	fract->image_x = img.width;
 	fract->image_y = img.height;
 	++i;
@@ -156,17 +161,17 @@ int			main(int ac, char **av)
 	{
 		parse_op(&fdf, av, ac);
 		init_fdf(&fdf);
-		
 		i = 0;
 		img_curs = fdf.img;
 		while (i < fdf.elem)
 		{
 			init_fract_param(&(img_curs->fract), *img_curs, &fdf);
-			init_mov_param(&(img_curs->mov));
 			draw_fractol(img_curs);
 			img_curs = img_curs->next;
 			++i;
 		}
+
+		fdf.view = fdf.img;
 		mlx_key_hook(fdf.win_ptr, key_hook, &fdf);
 		mlx_expose_hook(fdf.win_ptr, expose_hook, &fdf);
 		mlx_loop(fdf.mlx_ptr);

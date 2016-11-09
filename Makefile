@@ -6,7 +6,7 @@
 #    By: qfremeau <qfremeau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/02 11:44:08 by qfremeau          #+#    #+#              #
-#    Updated: 2016/11/07 14:18:54 by qfremeau         ###   ########.fr        #
+#    Updated: 2016/11/09 19:28:46 by qfremeau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,7 +114,7 @@ $(OBJDIR):
 $(NAME): $(OBJP)
 	@echo -e "--$(LOG_CLEAR)$(LOG_VIOLET)$(NAME)$(LOG_NOCOLOR)....................... $(LOG_YELLOW)assembling$(LOG_NOCOLOR)$(LOG_UP)"
 	@$(CC) $(CFLAGS) $(ADDFLAGS) -o $@ $^ $(INCP) $(MLIBX) $(LIBFT)
-	@echo -e "--$(LOG_CLEAR)$(LOG_VIOLET)$(NAME)$(LOG_NOCOLOR) compiled............... $(LOG_GREEN)✓$(LOG_NOCOLOR)"
+	@echo -e "--$(LOG_CLEAR)$(LOG_VIOLET)$(NAME)$(LOG_NOCOLOR) compiled........... $(LOG_GREEN)✓$(LOG_NOCOLOR)"
 
 # MrProper's legacy
 clean:

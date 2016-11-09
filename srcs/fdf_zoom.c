@@ -6,52 +6,47 @@
 /*   By: qfremeau <qfremeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 13:35:37 by qfremeau          #+#    #+#             */
-/*   Updated: 2016/11/08 17:49:31 by qfremeau         ###   ########.fr       */
+/*   Updated: 2016/11/09 20:03:07 by qfremeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-/*
-static void	zoom_map2(t_mlx *fdf, int keycode, t_param param)
+
+static void	zoom_map2(t_img *view, int keycode)
 {
-	(void)fdf;
 	if (keycode == KEY_PG_UP)
 	{
-		param.zoom = 0;
-		param.ratio = 1;
-		//move_vertex(&(fdf->map.vertex), param, fdf);
+		view->param.zoom = 0;
+		view->param.iter = 1;
+		move_fract(view);
 	}
 	if (keycode == KEY_PG_DOWN)
 	{
-		param.zoom = 0;
-		param.ratio = -1;
-		//move_vertex(&(fdf->map.vertex), param, fdf);
+		view->param.zoom = 0;
+		view->param.iter = -1;
+		move_fract(view);
 	}
 }
 
-void		zoom_map(t_mlx *fdf, int keycode)
+void		zoom_map(t_mlx *fdf, int keycode, t_img *view)
 {
-	t_param		param;
-
-	param.x = 0;
-	param.y = 0;
-	param.reset = 0;
-	clear_image(fdf->img);
+	view->param.x = 0;
+	view->param.y = 0;
+	view->param.reset = 0;
+	clear_image(view);
 	if (keycode == KEY_PLUS)
 	{
-		param.zoom = 1;
-		param.ratio = 0;
-		//move_vertex(&(fdf->map.vertex), param, fdf);
+		view->param.zoom = 1;
+		view->param.iter = 0;
+		move_fract(view);
 	}
 	if (keycode == KEY_MINUS)
 	{
-		param.zoom = -1;
-		param.ratio = 0;
-		//move_vertex(&(fdf->map.vertex), param, fdf);
+		view->param.zoom = -1;
+		view->param.iter = 0;
+		move_fract(view);
 	}
-	zoom_map2(fdf, keycode, param);
-	draw_fractol(fdf, 1);
-	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+	zoom_map2(view, keycode);
+	draw_fractol(view);
 	expose_hook(fdf);
 }
-*/
