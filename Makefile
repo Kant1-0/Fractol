@@ -6,7 +6,7 @@
 #    By: qfremeau <qfremeau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/02 11:44:08 by qfremeau          #+#    #+#              #
-#    Updated: 2016/11/09 19:28:46 by qfremeau         ###   ########.fr        #
+#    Updated: 2016/11/11 19:46:38 by qfremeau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,17 +33,22 @@ INCDIR =	includes\
 # Sources
 SRC = \
 			main.c\
-			fdf_list.c\
-			fdf_pixel.c\
-			fdf_image.c\
-			fdf_draw_line.c\
-			fdf_draw_rect.c\
-			fdf_move.c\
-			fdf_zoom.c\
-			fdf_maths.c\
-			fdf_hook.c\
-			fdf_color_rgb.c\
-			fdf_exit.c
+			fract_parse.c\
+			fract_list.c\
+			fract_pixel.c\
+			fract_color_rgb.c\
+			fract_image.c\
+			fract_mandelbrot.c\
+			fract_julia.c\
+			fract_glynn.c\
+			fract_draw_point.c\
+			fract_move.c\
+			fract_zoom.c\
+			fract_track.c\
+			fract_select.c\
+			fract_hook.c\
+			fract_help.c\
+			fract_exit.c
 
 OBJ =		$(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: qfremeau <qfremeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 17:31:05 by qfremeau          #+#    #+#             */
-/*   Updated: 2016/11/09 20:54:28 by qfremeau         ###   ########.fr       */
+/*   Updated: 2016/11/15 17:14:26 by qfremeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@
 # define KEY_NUM_2		0x0054
 # define KEY_NUM_5		0x0057
 
+# define MOUSE_LEFT		1
+# define MOUSE_RIGHT	2
+# define MOUSE_MIDLLE	3
+# define MOUSE_WHEEL_U	4
+# define MOUSE_WHEEL_D	5
+
 # define FRACT_OPT		"gIlh"
 # define FRACT_LST		"123"
 # define HELP			-2
@@ -65,11 +71,17 @@
 # define BLACK			0x000000
 # define YELLOW			0xFFFF00
 
-typedef struct	s_coord
+typedef struct	s_algo
 {
-	int				pixel[2];
-	struct s_coord	*next;
-}				t_coord;
+	float		c_r;
+	float		c_i;
+	float		z_r;
+	float		z_i;
+	int			i;
+	float		tmp;
+	int			x;
+	int			y;
+}				t_algo;
 
 typedef struct	s_color
 {
@@ -94,6 +106,8 @@ typedef struct	s_vert
 
 typedef struct	s_param
 {
+	float		zoom_x;
+	float		zoom_y;
 	int			zoom;
 	int			iter;
 	float		x;
@@ -106,10 +120,16 @@ typedef struct	s_fract
 	unsigned	*opt;
 	float		x1;
 	float		y1;
-	float		zoom;
+	float		x2;
+	float		y2;
+	float		zoom_x;
+	float		zoom_y;
 	int			image_x;
 	int			image_y;
 	int			iter_max;
+	float		jul_cr;
+	float		jul_ci;
+	int			stop;
 }				t_fract;
 
 typedef struct	s_img
@@ -127,12 +147,6 @@ typedef struct	s_img
 	struct s_img	*next;
 }				t_img;
 
-typedef struct	s_opt
-{
-	unsigned		opt;
-	struct s_opt	*next;
-}				t_opt;
-
 typedef struct	s_mlx
 {
 	void		*mlx_ptr;
@@ -143,41 +157,45 @@ typedef struct	s_mlx
 	int			window_y;
 	int			elem;
 	unsigned	opt1;
-	unsigned 	opt2;
-	unsigned 	opt3;
+	unsigned	opt2;
+	unsigned	opt3;
 }				t_mlx;
 
+void			pick_fractal_param(t_fract *fract, t_img img);
+void			parse_op(t_mlx *fdf, char **av, int ac);
+
 t_img			*lst_img_new(t_img **img, int width, int height, t_mlx *fdf);
-t_coord			*lst_coord_new(t_coord **coord, int x, int y);
 
-t_color			create_color_rgb(int rgb);
-
-double			norme(t_pos const a, t_pos const b);
-double			interpolate(double const a, double const b, double const f);
-t_color			linear_interpolation(t_color const src, t_color const end,
-	double const factor);
+t_color			add_color_rgb(int rgb);
+t_color			create_color_rgb(int r, int g, int b);
 
 void			draw_fractol(t_img *img);
+void			algo_mandel(t_algo *algo, t_img *img);
+void			fractol_mandelbrot(t_img *img);
+void			fractol_julia(t_img *img);
+void			fractol_glynn(t_img *img);
 
 void			move_map(t_mlx *fdf, int keycode, t_img *view);
-void			zoom_map(t_mlx *fdf, int keycode, t_img *view);
+void			zoom_map(t_mlx *fdf, int keycode, int x, int y);
 void			select_map(t_mlx *fdf, int keycode, t_img **view);
-void			reset_map(t_mlx *fdf, int keycode);
+void			iterate_map(t_mlx *fdf, int keycode, t_img *view);
 
 void			clear_image(t_img *img);
 void			draw_image(t_mlx *fdf);
 int				key_hook(int keycode, void *param);
+int				mouse_hook(int button, int x, int y, void *param);
+int				track_hook(int x, int y, void *param);
 int				expose_hook(void *param);
 
 void			put_info_to_window(t_mlx *fdf, t_img *view);
 void			put_pixel_to_image(t_img const img, t_vert const vertex);
 t_color			new_color(unsigned char const b, unsigned char const g,
 	unsigned char const r, unsigned char const a);
-void			draw_line(t_img const img, t_vert const start,
-	t_vert const end);
 void			draw_point(t_img *img, t_vert point);
 void			move_fract(t_img *view);
 
+void			print_list(void);
+void			print_help(void);
 void			mlx_exit(int ret, t_mlx *fdf, char *error);
 
 #endif

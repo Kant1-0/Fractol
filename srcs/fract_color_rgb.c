@@ -1,42 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_hexa_to_int.c                                  :+:      :+:    :+:   */
+/*   fract_color_rgb.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qfremeau <qfremeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/01 17:34:20 by qfremeau          #+#    #+#             */
-/*   Updated: 2016/11/01 17:35:24 by qfremeau         ###   ########.fr       */
+/*   Created: 2016/10/31 13:58:08 by qfremeau          #+#    #+#             */
+/*   Updated: 2016/11/11 16:04:48 by qfremeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static int	hexa_to_int(char c)
+t_color		add_color_rgb(int rgb)
 {
-	int		digit;
+	t_color		color;
 
-	if (c >= 'A' && c <= 'F')
-		digit = (int)c - 55;
-	else if (c >= 'a' && c <= 'f')
-		digit = (int)c - 87;
-	else
-		digit = (int)c - 48;
-	return (digit);
+	color.rgba[0] = 200 - (rgb * 20);
+	color.rgba[1] = 200 - (rgb * 20);
+	color.rgba[2] = 0 + (rgb * 20);
+	color.rgba[3] = 0;
+	return (color);
 }
 
-int			color_hexa(char *str)
+t_color		create_color_rgb(int r, int g, int b)
 {
-	int		dig1;
-	int		dig2;
-	int		res;
-	int		i;
+	t_color		color;
 
-	i = 0;
-	dig2 = hexa_to_int(str[i]);
-	++i;
-	dig1 = hexa_to_int(str[i]);
-	++i;
-	res = (dig2 * pow(16, 1)) + (dig1 * pow(16, 0));
-	return (res);
+	color.rgba[0] = b;
+	color.rgba[1] = g;
+	color.rgba[2] = r;
+	color.rgba[3] = 0;
+	return (color);
 }
